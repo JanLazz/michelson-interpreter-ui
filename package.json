@@ -19,6 +19,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "postinstall": "git clone https://github.com/berkaycagir/michelson-parser.git && mv michelson-parser ./node_modules/michelson-interpreter/ && node modify-webpack-config.js",  
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
