@@ -11,12 +11,18 @@
     "buffer": "^6.0.3",
     "crypto": "^1.0.1",
     "crypto-browserify": "^3.12.0",
-    "michelson-interpreter": "github:JanLazz/michelson-interpreter#1cafa8f31defed2d6a91406e5140b592ff152d60",
+    "michelson-interpreter": "github:JanLazz/michelson-interpreter",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "^5.0.1",
     "stream-browserify": "^3.0.0",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "stream-http": "^3.2.0",
+    "https-browserify": "^1.0.0",
+    "os-browserify": "^0.3.0",
+    "url": "^0.11.3",
+    "process": "^0.11.10"
+
   },
   "scripts": {
     "start": "react-app-rewired start",
