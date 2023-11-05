@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { JSONTree } from 'react-json-tree';
 import { Map } from 'immutable';
 import * as michelsonImport from "michelson-interpreter";
+import Rjv from 'react-json-tree-viewer';
 
 const michelsonInterpreter = michelsonImport.default.michelsonInterpreter;
 const State = michelsonImport.default.State;
@@ -9,6 +10,13 @@ const State = michelsonImport.default.State;
 function MyMichelsonComponent() {
   const [interpreterOutput, setInterpreterOutput] = useState(null);
   const [currentStep, setCurrentStep] = useState(0);
+  const jsonData = {
+    key: 'value',
+    nested: {
+      nestedKey: 'nestedValue',
+    },
+  };
+
 
   const handleFileChosen = async (event) => {
     const file = event.target.files[0];
@@ -36,6 +44,27 @@ function MyMichelsonComponent() {
     }
   };
 
+  const theme = {
+    scheme: 'solarized',
+    author: 'ethan schoonover (http://ethanschoonover.com/solarized)',
+    base00: '#F5FFF0',
+    base01: '#073642',
+    base02: '#586e75',
+    base03: '#657b83',
+    base04: '#839496',
+    base05: '#93a1a1',
+    base06: '#eee8d5',
+    base07: '#fdf6e3',
+    base08: '#dc322f',
+    base09: '#cb4b16',
+    base0A: '#b58900',
+    base0B: '#859900',
+    base0C: '#2aa198',
+    base0D: '#268bd2',
+    base0E: '#6c71c4',
+    base0F: '#d33682'
+  };
+
   return (
     <div>
       <input type="file" onChange={handleFileChosen} />
@@ -45,12 +74,37 @@ function MyMichelsonComponent() {
           <button onClick={handleNextStep} disabled={currentStep === interpreterOutput.length - 1}>Next</button>
           <div>
             <h>Step {currentStep + 1}</h>
-            <pre>{JSON.stringify(interpreterOutput[currentStep], null, 2)}</pre>
+            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px'}}>
+              <Rjv 
+                data={interpreterOutput[currentStep]}
+                hideRoot={true} 
+                style={{ margin: '10px' }}
+                arrowStyle={{ color: 'black' }}
+                shouldExpandNode={(path, data) => path.length === 1}/>
+            </div>
           </div>
         </div>
       )}
     </div>
   );
 }
+
+/*<div>
+              <JSONTree
+                data={interpreterOutput[currentStep]}
+                theme={{
+                  extend: theme,
+                  valueLabel: {
+                    textDecoration: 'underline',
+                  },
+                  nestedNodeLabel: ({ style }, keyPath, nodeType, expanded) => ({
+                    style: {
+                      ...style,
+                      textTransform: expanded ? 'uppercase' : style.textTransform,
+                    },
+                  }),
+                }}
+              />
+            </div>*/
 
 export default MyMichelsonComponent;
