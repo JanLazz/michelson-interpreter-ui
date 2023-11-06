@@ -66,21 +66,28 @@ function MyMichelsonComponent() {
   };
 
   return (
-    <div>
-      <input type="file" onChange={handleFileChosen} />
+    <div className="my-michelson-component">
+      <input type="file" onChange={handleFileChosen} style={{margin: '20px'}}/>
       {interpreterOutput && (
         <div>
-          <button onClick={handlePrevStep} disabled={currentStep === 0}>Back</button>
-          <button onClick={handleNextStep} disabled={currentStep === interpreterOutput.length - 1}>Next</button>
+          <button className="nav-button" onClick={handlePrevStep} disabled={currentStep === 0} style={{margin: '10px'}}>Back</button>
+          <button className="nav-button" onClick={handleNextStep} disabled={currentStep === interpreterOutput.length - 1} style={{margin: '10px'}}>Next</button>
           <div>
-            <h>Step {currentStep + 1}</h>
-            <div style={{ display: 'flex', justifyContent: 'center', margin: '20px'}}>
+            <div className="parameter-json-container">
+              <div className="parameter-info">
+                <h className="parameter-label" style={{margin: '20px'}}>Parameter</h>
+                <pre >{`parameter int;`}</pre>
+              </div >
+              <h className="step-label" style={{margin: '20px'}}>Step {currentStep + 1}</h>
+              <div style={{ display: 'flex', justifyContent: 'center', margin: '20px'}}>
               <Rjv 
                 data={interpreterOutput[currentStep]}
                 hideRoot={true} 
                 style={{ margin: '10px' }}
                 arrowStyle={{ color: 'black' }}
-                shouldExpandNode={(path, data) => path.length === 1}/>
+                shouldExpandNode={(path, data) => path.length === 1}
+              />
+              </div>
             </div>
           </div>
         </div>
@@ -89,9 +96,21 @@ function MyMichelsonComponent() {
   );
 }
 
+/*
+ <div style={{ display: 'flex', justifyContent: 'center', margin: '20px'}}>
+              <Rjv 
+                data={interpreterOutput[currentStep]}
+                hideRoot={true} 
+                style={{ margin: '10px' }}
+                arrowStyle={{ color: 'black' }}
+                shouldExpandNode={(path, data) => path.length === 1}/>
+            </div>
+*/
+
 /*<div>
               <JSONTree
                 data={interpreterOutput[currentStep]}
+                hideRoot={true}
                 theme={{
                   extend: theme,
                   valueLabel: {
@@ -104,7 +123,7 @@ function MyMichelsonComponent() {
                     },
                   }),
                 }}
-              />
+              /> 
             </div>*/
 
 export default MyMichelsonComponent;
