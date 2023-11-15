@@ -76,7 +76,7 @@ function MyMichelsonComponent() {
   };
 
   return (
-    <body>
+    <div>
       <h3>Michelson Interpreter</h3>
       <div className="my-michelson-component">
         <input
@@ -144,9 +144,12 @@ function MyMichelsonComponent() {
               Next
             </button>
             <div>
-              <h className="step-label" style={{ margin: "20px" }}>
+              <p
+                className="step-label"
+                style={{ style: "font-size: 80%", margin: "20px" }}
+              >
                 Step {currentStep + 1}
-              </h>
+              </p>
               <div
                 style={{
                   display: "flex",
@@ -166,7 +169,7 @@ function MyMichelsonComponent() {
           </div>
         )}
       </div>
-    </body>
+    </div>
   );
 }
 
