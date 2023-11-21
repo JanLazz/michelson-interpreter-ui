@@ -75,6 +75,24 @@ function MyMichelsonComponent() {
     setStorageInput(event.target.value);
   };
 
+  const checkParameterType = (param) => {
+    if (param === "account") {
+      return "Insert account as a string";
+    } else if (param === "address") {
+      return "Insert address as a string";
+    } else if (param === "amount") {
+      return "Insert amount as an int";
+    } else if (param === "entrypoint") {
+      return "Insert entrypoint as a string";
+    } else if (param === "gas_limit") {
+      return "Insert gas_limit as an int";
+    } else if (param === "id") {
+      return "Insert id as an int";
+    } else if (param === "timestamp") {
+      return "Insert timestamp as a string in RFC3339 notation or an int as an Unix time";
+    }
+  };
+
   return (
     <div>
       <h3>Michelson Interpreter</h3>
@@ -88,7 +106,8 @@ function MyMichelsonComponent() {
           <form>
             <div className="input-info" style={{ marginBottom: "25px" }}>
               <h4 className="input-label">
-                Parameter (type: {parameterInfo})
+                Parameter (type: {parameterInfo}){" "}
+                {checkParameterType(parameterInfo)}
                 <br />
                 Storage (type: {storageInfo})
               </h4>
