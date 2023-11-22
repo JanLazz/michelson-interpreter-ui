@@ -1,6 +1,4 @@
 import React, { useState } from "react";
-import { JSONTree } from "react-json-tree";
-import { Map } from "immutable";
 import * as michelsonImport from "michelson-interpreter";
 import Rjv from "react-json-tree-viewer";
 import "./MyMichelsonComponent.css";
@@ -109,7 +107,7 @@ function MyMichelsonComponent() {
                 Parameter (type: {parameterInfo}){" "}
                 {checkParameterType(parameterInfo)}
                 <br />
-                Storage (type: {storageInfo})
+                Storage (type: {storageInfo}) {checkParameterType(storageInfo)}
               </h4>
             </div>
             <div>

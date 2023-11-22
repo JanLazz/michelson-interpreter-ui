@@ -1,5 +1,5 @@
-import './App.css';
-import MyMichelsonComponent from './test.js';
+import "./App.css";
+import MyMichelsonComponent from "./ui.js";
 
 function App() {
   return (
