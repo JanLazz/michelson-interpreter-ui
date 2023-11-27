@@ -1,11 +1,60 @@
+.parent-div {
+  margin-bottom: 200px;
+}
+
 .my-michelson-component {
   margin: 20px;
 }
 
-.file-input {
-  margin: 10px 0;
-  padding: 8px;
-  font-size: 16px;
+.file-upload {
+  margin: 10px;
+  margin-left: 120px;
+}
+
+.input-info {
+  margin-bottom: 20px;
+}
+
+.obligatory-inputs {
+  margin-bottom: 30px;
+}
+
+.parameter-label {
+  margin-bottom: 10px;
+}
+
+.parameter-span {
+  margin-bottom: 10px;
+}
+
+.storage-span {
+  margin-left: 60px;
+  margin-right: 10px;
+}
+
+.show-optional-inputs {
+  margin-bottom: 15;
+}
+
+.optional-inputs {
+  margin-bottom: 25;
+}
+
+.insert-optional-button {
+  margin: 10px;
+}
+
+.optional-input-fields {
+  margin-bottom: 25px;
+}
+
+.optional-input-label {
+  margin-bottom: 10px;
+}
+
+.optional-input-span {
+  margin-left: 40px;
+  margin-right: 10px;
 }
 
 .nav-button {
@@ -30,10 +79,26 @@
   cursor: pointer;
 }
 
+.submit-input-button {
+  margin: 10px;
+}
+
 .nav-button:disabled {
+  margin: 10px;
   background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
+}
+
+.step-p {
+  font-size: 80%;
+  margin: 20px;
+}
+
+.step-div {
+  display: flex;
+  justify-content: center;
+  margin: 20px;
 }
 
 .parameter-value {
@@ -55,4 +120,16 @@
 
 .json-tree-container {
   margin: 20px;
+}
+
+.rjv-container {
+  margin: 10px;
+}
+
+.change-root-state-button {
+  margin: 10px;
+}
+
+.reset-button {
+  margin: 10px;
 }

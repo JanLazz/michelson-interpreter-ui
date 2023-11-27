@@ -9,6 +9,8 @@ const State = michelsonImport.default.State;
 function MyMichelsonComponent() {
   const [fileIsIn, setFileIsIn] = useState(null);
   const [script, setScript] = useState(null);
+  const [expandNode, setExpandNode] = useState(false);
+  const [showOptionalInputs, setShowOptionalInputs] = useState(false);
   const [showAccountField, setShowAccountField] = useState(null);
   const [showAddressField, setShowAddressField] = useState(null);
   const [showAmountField, setShowAmountField] = useState(null);
@@ -32,6 +34,7 @@ function MyMichelsonComponent() {
 
   const prepareFileChosen = async (event) => {
     resetAll();
+    setFileIsIn(null);
     const localFile = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = async (e) => {
@@ -69,7 +72,6 @@ function MyMichelsonComponent() {
     setScript(script);
     setParameterInfo(null);
     setStorageInfo(null);
-    setFileIsIn(null);
   };
 
   const handleAddAccountField = async (event) => {
@@ -92,6 +94,14 @@ function MyMichelsonComponent() {
   };
   const handleAddTimestampField = async (event) => {
     setShowTimestampField(true);
+  };
+
+  const handleShowOptionalInputs = async (event) => {
+    setShowOptionalInputs(!showOptionalInputs);
+  };
+
+  const handleExpandNode = async (event) => {
+    setExpandNode(!expandNode);
   };
 
   const handleFileWithParameters = async (event) => {
@@ -159,278 +169,270 @@ function MyMichelsonComponent() {
   };
 
   return (
-    <div style={{ marginBottom: "200px" }}>
-      <h3>Michelson Interpreter</h3>
+    <div className="parent-div">
+      <h2>Michelson Interpreter</h2>
       <div className="my-michelson-component">
         <input
+          className="file-upload"
           type="file"
           onChange={prepareFileChosen}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              e.preventDefault();
-              handleFileWithParameters(e);
-            }
-          }}
-          style={{ margin: "20px" }}
         />
         {fileIsIn && (
           <form>
-            <div className="input-info" style={{ marginBottom: "20px" }}>
+            <div className="input-info">
               <h4 className="input-label">
                 Parameter (type: {parameterInfo})
                 <br />
                 Storage (type: {storageInfo})
               </h4>
             </div>
-            <div className="obligatory inputs" style={{ marginBottom: "30px" }}>
-              <label style={{ marginBottom: "10px" }}>
-                <span style={{ marginRight: "10px" }}>Parameter: </span>
+            <div className="obligatory-inputs">
+              <label className="parameter-label">
+                <span className="parameter-span">Parameter: </span>
                 <input
+                  className="parameter-input-field"
                   type="text"
                   value={parameterInput}
                   onChange={handleParameterInputChange}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+                    if (
+                      e.key === "Enter" &&
+                      parameterInput !== "" &&
+                      storageInput !== ""
+                    ) {
                       e.preventDefault();
                       handleFileWithParameters(e);
                     }
                   }}
-                  placeholder="Bitte Parameter eingeben"
+                  placeholder="Please enter parameter"
                 />
               </label>
               <label>
-                <span style={{ marginRight: "10px", marginLeft: "60px" }}>
-                  Storage:{" "}
-                </span>
+                <span className="storage-span">Storage: </span>
                 <input
+                  className="storage-input-field"
                   type="text"
                   value={storageInput}
                   onChange={handleStorageInputChange}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") {
+                    if (
+                      e.key === "Enter" &&
+                      parameterInput !== "" &&
+                      storageInput !== ""
+                    ) {
                       e.preventDefault();
                       handleFileWithParameters(e);
                     }
                   }}
-                  placeholder="Bitte Storage eingeben"
+                  placeholder="Please enter storage"
                 />
               </label>{" "}
             </div>
-            <div className="optional inputs" style={{ marginBottom: "25px" }}>
-              <p style={{ marginBottom: "15px" }}> Edit optional Inputs</p>
-              {showAccountField !== true && (
-                <button
-                  className="insert-account-button"
-                  onClick={handleAddAccountField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom account
-                </button>
-              )}
-              {showAddressField !== true && (
-                <button
-                  className="insert-address-button"
-                  onClick={handleAddAddressField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom address
-                </button>
-              )}
-              {showAmountField !== true && (
-                <button
-                  className="insert-amount-button"
-                  onClick={handleAddAmountField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom amount
-                </button>
-              )}
-              {showEntrypointField !== true && (
-                <button
-                  className="insert-entrypoint-button"
-                  onClick={handleAddEntrypointField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom entrypoint
-                </button>
-              )}
-              {showGas_limitField !== true && (
-                <button
-                  className="insert-gas_limit-button"
-                  onClick={handleAddGas_limitField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom gas_limit
-                </button>
-              )}
-              {showIdField !== true && (
-                <button
-                  className="insert-id-button"
-                  onClick={handleAddIdField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom id
-                </button>
-              )}
-              {showTimestampField !== true && (
-                <button
-                  className="insert-timesptamp-button"
-                  onClick={handleAddTimestampField}
-                  style={{ margin: "10px" }}
-                >
-                  Add custom timestamp
-                </button>
-              )}
-            </div>
-
-            <div
-              className="optional input fields"
-              style={{ marginBottom: "25px" }}
+            <button
+              type="button"
+              className="show-optional-inputs"
+              onClick={handleShowOptionalInputs}
             >
-              {showAccountField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Account:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={accountInput}
-                    onChange={handleAccountInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Account String eingeben"
-                  />
-                </label>
-              )}
-              {showAddressField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Address:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={addressInput}
-                    onChange={handleAddressInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Address String eingeben"
-                  />
-                </label>
-              )}
-              {showAmountField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Amount:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={amountInput}
-                    onChange={handleAmountInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Amount Int eingeben"
-                  />
-                </label>
-              )}
-              {showEntrypointField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Entrypoint:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={entrypointInput}
-                    onChange={handleEntrypointInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Entrypoint String eingeben"
-                  />
-                </label>
-              )}
-            </div>
-            <div
-              className="optional input fields"
-              style={{ marginBottom: "25px" }}
-            >
-              {showGas_limitField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Gas_limit:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={gas_limitInput}
-                    onChange={handleGas_limitInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Gas_limit Number eingeben"
-                  />
-                </label>
-              )}
-              {showIdField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Id:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={idInput}
-                    onChange={handleIdInputChange}
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        e.preventDefault();
-                        handleFileWithParameters(e);
-                      }
-                    }}
-                    placeholder="Id Number eingeben"
-                  />
-                </label>
-              )}
-              {showTimestampField === true && (
-                <label style={{ marginBottom: "10px" }}>
-                  <span style={{ marginRight: "10px", marginLeft: "40px" }}>
-                    Timestamp:{" "}
-                  </span>
-                  <input
-                    type="text"
-                    value={timestampInput}
-                    onChange={handleTimestampInputChange}
-                    placeholder="Siehe Info"
-                  />
-                  <br />
-                  <p>
-                    Timestamp as a string in RFC3339 notation or an int as an
-                    Unix time
-                  </p>
-                </label>
-              )}
-            </div>
+              Show optional Inputs
+            </button>
+            {showOptionalInputs && (
+              <div className="optional-inputs">
+                {showAccountField !== true && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddAccountField}
+                  >
+                    Add custom account
+                  </button>
+                )}
+                {!showAddressField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddAddressField}
+                  >
+                    Add custom address
+                  </button>
+                )}
+                {!showAmountField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddAmountField}
+                  >
+                    Add custom amount
+                  </button>
+                )}
+                {!showEntrypointField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddEntrypointField}
+                  >
+                    Add custom entrypoint
+                  </button>
+                )}
+                {!showGas_limitField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddGas_limitField}
+                  >
+                    Add custom gas_limit
+                  </button>
+                )}
+                {!showIdField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddIdField}
+                  >
+                    Add custom id
+                  </button>
+                )}
+                {!showTimestampField && (
+                  <button
+                    className="insert-optional-button"
+                    onClick={handleAddTimestampField}
+                  >
+                    Add custom timestamp
+                  </button>
+                )}
+              </div>
+            )}
+            {showOptionalInputs && (
+              <div className="optional-input-fields">
+                {showAccountField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Account: </span>
+                    <input
+                      className="account-input-field"
+                      type="text"
+                      value={accountInput}
+                      onChange={handleAccountInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter account string"
+                    />
+                  </label>
+                )}
+                {showAddressField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Address: </span>
+                    <input
+                      className="address-input-field"
+                      type="text"
+                      value={addressInput}
+                      onChange={handleAddressInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter address string"
+                    />
+                  </label>
+                )}
+                {showAmountField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Amount: </span>
+                    <input
+                      className="amount-input-field"
+                      type="text"
+                      value={amountInput}
+                      onChange={handleAmountInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter amount integer"
+                    />
+                  </label>
+                )}
+                {showEntrypointField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Entrypoint: </span>
+                    <input
+                      className="entrypoint-input-field"
+                      type="text"
+                      value={entrypointInput}
+                      onChange={handleEntrypointInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter entrypoint string"
+                    />
+                  </label>
+                )}
+              </div>
+            )}
+            {showOptionalInputs && (
+              <div className="optional-input-fields">
+                {showGas_limitField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Gas_limit: </span>
+                    <input
+                      className="gas_limit-input-field"
+                      type="text"
+                      value={gas_limitInput}
+                      onChange={handleGas_limitInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter gas_limit number"
+                    />
+                  </label>
+                )}
+                {showIdField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Id: </span>
+                    <input
+                      className="id-input-field"
+                      type="text"
+                      value={idInput}
+                      onChange={handleIdInputChange}
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                          e.preventDefault();
+                          handleFileWithParameters(e);
+                        }
+                      }}
+                      placeholder="Enter id number"
+                    />
+                  </label>
+                )}
+                {showTimestampField && (
+                  <label className="optional-input-label">
+                    <span className="optional-input-span">Timestamp: </span>
+                    <input
+                      className="timestamp-input-field"
+                      type="text"
+                      value={timestampInput}
+                      onChange={handleTimestampInputChange}
+                      placeholder="See Information"
+                    />
+                    <br />
+                    <p>
+                      Timestamp as a string in RFC3339 notation or an int as an
+                      Unix time
+                    </p>
+                  </label>
+                )}
+              </div>
+            )}
             <div>
               <button
                 className="submit-input-button"
                 onClick={handleFileWithParameters}
                 disabled={parameterInput === "" || storageInput === ""}
-                style={{ margin: "10px" }}
               >
                 Submit
               </button>
@@ -443,7 +445,6 @@ function MyMichelsonComponent() {
               className="nav-button"
               onClick={handlePrevStep}
               disabled={currentStep === 0}
-              style={{ margin: "10px" }}
             >
               Back
             </button>
@@ -451,32 +452,48 @@ function MyMichelsonComponent() {
               className="nav-button"
               onClick={handleNextStep}
               disabled={currentStep === interpreterOutput.length - 1}
-              style={{ margin: "10px" }}
             >
               Next
             </button>
             <div>
-              <p
-                className="step-label"
-                style={{ style: "font-size: 80%", margin: "20px" }}
-              >
-                Step {currentStep + 1}
-              </p>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "center",
-                  margin: "20px",
-                }}
-              >
-                <Rjv
-                  data={interpreterOutput[currentStep]}
-                  hideRoot={true}
-                  style={{ margin: "10px" }}
-                  arrowStyle={{ color: "black" }}
-                  shouldExpandNode={(path, data) => path.length === 1}
-                />
+              <p className="step-p">Step {currentStep + 1}</p>
+              <div className="step-div">
+                {!expandNode && (
+                  <Rjv
+                    className="rjv-component"
+                    data={interpreterOutput[currentStep]}
+                    hideRoot={true}
+                    arrowStyle={{ color: "black" }}
+                    shouldExpandNode={(path, data) => path.length === 1}
+                  />
+                )}
+                {expandNode && (
+                  <Rjv
+                    className="rjv-component"
+                    data={interpreterOutput[currentStep]}
+                    hideRoot={true}
+                    arrowStyle={{ color: "black" }}
+                    shouldExpandNode={(path, data) => true}
+                  />
+                )}
               </div>
+              <br />
+              <br />
+              <button
+                type="button"
+                className="change-root-state-button"
+                onClick={handleExpandNode}
+              >
+                Root
+              </button>
+              <button
+                type="button"
+                className="reset-button"
+                onClick={resetAll}
+                reset-button
+              >
+                Reset
+              </button>
             </div>
           </div>
         )}
