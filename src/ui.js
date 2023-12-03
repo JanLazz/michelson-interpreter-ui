@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import * as michelsonImport from "michelson-interpreter";
 import Rjv from "react-json-tree-viewer";
 import "./MyMichelsonComponent.css";
@@ -7,6 +7,7 @@ const michelsonInterpreter = michelsonImport.default.michelsonInterpreter;
 const State = michelsonImport.default.State;
 
 function MyMichelsonComponent() {
+  const formRef = useRef(null);
   const [fileIsIn, setFileIsIn] = useState(null);
   const [script, setScript] = useState(null);
   const [expandNode, setExpandNode] = useState(false);
@@ -34,7 +35,6 @@ function MyMichelsonComponent() {
 
   const prepareFileChosen = async (event) => {
     resetAll();
-    setFileIsIn(null);
     const localFile = event.target.files[0];
     const fileReader = new FileReader();
     fileReader.onload = async (e) => {
@@ -42,16 +42,32 @@ function MyMichelsonComponent() {
       const splitScript = localScript.split(";");
       const parameter = splitScript[0].split("parameter ")[1].trim();
       const storage = splitScript[1].split("storage ")[1].trim();
+
       setScript(localScript);
       setParameterInfo(parameter);
       setStorageInfo(storage);
       setFileIsIn(localFile.name);
     };
     fileReader.readAsText(localFile);
+    event.target.value = "";
   };
 
   const resetAll = () => {
+    setFileIsIn(null);
+    setScript(null);
+    setExpandNode(false);
+    setShowOptionalInputs(false);
+    setShowAccountField(null);
+    setShowAddressField(null);
+    setShowAmountField(null);
+    setShowEntrypointField(null);
+    setShowGas_limitField(null);
+    setShowIdField(null);
+    setShowTimestampField(null);
+    setInterpreterOutput(null);
     setCurrentStep(0);
+    setParameterInfo(null);
+    setStorageInfo(null);
     setParameterInput("");
     setStorageInput("");
     setAccountInput("");
@@ -60,18 +76,7 @@ function MyMichelsonComponent() {
     setEntrypointInput("");
     setGas_limitInput("");
     setIdInput("");
-    setShowAccountField(null);
-    setShowAddressField(null);
-    setShowAmountField(null);
-    setShowEntrypointField(null);
-    setShowGas_limitField(null);
-    setShowIdField(null);
-    setShowTimestampField(null);
     setTimestampInput("");
-    setInterpreterOutput(null);
-    setScript(script);
-    setParameterInfo(null);
-    setStorageInfo(null);
   };
 
   const handleAddAccountField = async (event) => {
@@ -124,6 +129,7 @@ function MyMichelsonComponent() {
     const parsedOutput = JSON.parse(michelsonReturnValue);
     setInterpreterOutput(parsedOutput);
     setCurrentStep(0);
+    formRef.current.reset();
   };
 
   const handleNextStep = () => {
@@ -167,6 +173,9 @@ function MyMichelsonComponent() {
   const handleTimestampInputChange = (event) => {
     setTimestampInput(event.target.value);
   };
+  const handleReload = (event) => {
+    window.location.reload();
+  };
 
   return (
     <div className="parent-div">
@@ -182,11 +191,22 @@ function MyMichelsonComponent() {
             type="file"
             onChange={prepareFileChosen}
           />
+
+          {fileIsIn && (
+            <button
+              type="button"
+              className="reset-button"
+              onClick={handleReload}
+              reset-button
+            >
+              Reset
+            </button>
+          )}
           {fileIsIn && <p className="file-name">Selected file: {fileIsIn}</p>}
         </div>
 
         {fileIsIn && (
-          <form>
+          <form ref={formRef}>
             <div className="input-info">
               <h4 className="input-label">
                 Parameter (type: {parameterInfo})
@@ -196,7 +216,7 @@ function MyMichelsonComponent() {
             </div>
             <div className="obligatory-inputs">
               <label className="parameter-label">
-                <span className="parameter-span">Parameter: </span>
+                <span className="paramefter-span">Parameter: </span>
                 <input
                   className="parameter-input-field"
                   type="text"

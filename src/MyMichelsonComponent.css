@@ -30,6 +30,22 @@
   opacity: 0.8;
 }
 
+.reset-button {
+  margin-left: 3px;
+  margin-bottom: 10px;
+  padding: 8px 16px;
+  background-color: #d08466;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.reset-button:hover {
+  opacity: 0.8;
+}
+
 .file-name {
   margin-top: 10px;
   font-size: 14px;
