@@ -45,7 +45,7 @@ function MyMichelsonComponent() {
       setScript(localScript);
       setParameterInfo(parameter);
       setStorageInfo(storage);
-      setFileIsIn(true);
+      setFileIsIn(localFile.name);
     };
     fileReader.readAsText(localFile);
   };
@@ -172,11 +172,19 @@ function MyMichelsonComponent() {
     <div className="parent-div">
       <h2>Michelson Interpreter</h2>
       <div className="my-michelson-component">
-        <input
-          className="file-upload"
-          type="file"
-          onChange={prepareFileChosen}
-        />
+        <div className="file-upload-container">
+          <label htmlFor="file-upload" className="file-upload-label">
+            Choose a file
+          </label>
+          <input
+            id="file-upload"
+            className="file-upload-input"
+            type="file"
+            onChange={prepareFileChosen}
+          />
+          {fileIsIn && <p className="file-name">Selected file: {fileIsIn}</p>}
+        </div>
+
         {fileIsIn && (
           <form>
             <div className="input-info">
@@ -230,16 +238,18 @@ function MyMichelsonComponent() {
             </div>
             <button
               type="button"
-              className="show-optional-inputs"
+              className="show-optional-inputs-button"
               onClick={handleShowOptionalInputs}
             >
-              Show optional Inputs
+              {showOptionalInputs
+                ? "Hide optional Inputs"
+                : "Show optional Inputs"}
             </button>
             {showOptionalInputs && (
               <div className="optional-inputs">
-                {showAccountField !== true && (
+                {!showAccountField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-account-button"
                     onClick={handleAddAccountField}
                   >
                     Add custom account
@@ -247,7 +257,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showAddressField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-address-button"
                     onClick={handleAddAddressField}
                   >
                     Add custom address
@@ -255,7 +265,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showAmountField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-amount-button"
                     onClick={handleAddAmountField}
                   >
                     Add custom amount
@@ -263,7 +273,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showEntrypointField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-entrypoint-button"
                     onClick={handleAddEntrypointField}
                   >
                     Add custom entrypoint
@@ -271,7 +281,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showGas_limitField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-gas_limit-button"
                     onClick={handleAddGas_limitField}
                   >
                     Add custom gas_limit
@@ -279,7 +289,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showIdField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-id-button"
                     onClick={handleAddIdField}
                   >
                     Add custom id
@@ -287,7 +297,7 @@ function MyMichelsonComponent() {
                 )}
                 {!showTimestampField && (
                   <button
-                    className="insert-optional-button"
+                    className="insert-optional-timestamp-button"
                     onClick={handleAddTimestampField}
                   >
                     Add custom timestamp
@@ -437,19 +447,30 @@ function MyMichelsonComponent() {
                 Submit
               </button>
             </div>
+            {interpreterOutput && (
+              <div>
+                <button
+                  type="button"
+                  className="change-root-state-button"
+                  onClick={handleExpandNode}
+                >
+                  {expandNode ? "Shrink tree" : "Expand tree"}
+                </button>
+              </div>
+            )}
           </form>
         )}
         {interpreterOutput && (
           <div>
             <button
-              className="nav-button"
+              className="prev-button"
               onClick={handlePrevStep}
               disabled={currentStep === 0}
             >
               Back
             </button>
             <button
-              className="nav-button"
+              className="next-button"
               onClick={handleNextStep}
               disabled={currentStep === interpreterOutput.length - 1}
             >
@@ -479,21 +500,6 @@ function MyMichelsonComponent() {
               </div>
               <br />
               <br />
-              <button
-                type="button"
-                className="change-root-state-button"
-                onClick={handleExpandNode}
-              >
-                Root
-              </button>
-              <button
-                type="button"
-                className="reset-button"
-                onClick={resetAll}
-                reset-button
-              >
-                Reset
-              </button>
             </div>
           </div>
         )}

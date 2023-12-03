@@ -6,9 +6,34 @@
   margin: 20px;
 }
 
-.file-upload {
-  margin: 10px;
-  margin-left: 120px;
+.file-upload-container {
+  margin: 20px;
+  text-align: center;
+}
+
+.file-upload-label {
+  display: inline-block;
+  padding: 8px 10px;
+  background-color: #5100ff;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.file-upload-input {
+  display: none;
+}
+
+.file-upload-label:hover {
+  opacity: 0.8;
+}
+
+.file-name {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #333333;
 }
 
 .input-info {
@@ -32,20 +57,137 @@
   margin-right: 10px;
 }
 
-.show-optional-inputs {
+.show-optional-inputs-button {
   margin-bottom: 15;
+  margin: 10px;
+  padding: 8px 20px;
+  background-color: #007bffbd;
+  color: #ffffff;
+  border: 1px solid #007bffd3;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.optional-inputs-button:hover {
+  opacity: 0.8;
 }
 
 .optional-inputs {
   margin-bottom: 25;
 }
 
-.insert-optional-button {
-  margin: 10px;
+.insert-optional-account-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-address-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-amount-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-entrypoint-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-gas_limit-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-id-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-timestamp-button {
+  margin-top: 10px;
+  padding: 5px 12px;
+  background-color: #007bff88;
+  color: #ffffff;
+  border: 1px solid #007bffa8;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.insert-optional-account-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-address-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-amount-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-entrypoint-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-gas_limit-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-id-button:hover {
+  opacity: 0.8;
+}
+
+.insert-optional-timestamp-button:hover {
+  opacity: 0.8;
+}
+
+.submit-input-button:hover {
+  opacity: 0.8;
 }
 
 .optional-input-fields {
-  margin-bottom: 25px;
+  margin-top: 10px;
 }
 
 .optional-input-label {
@@ -57,7 +199,7 @@
   margin-right: 10px;
 }
 
-.nav-button {
+.prev-button {
   font-size: 16px;
   margin: 10px;
   padding: 8px 16px;
@@ -66,6 +208,37 @@
   border: none;
   border-radius: 4px;
   cursor: pointer;
+}
+
+.prev-button:hover {
+  opacity: 0.8;
+}
+
+.prev-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+}
+
+.next-button {
+  font-size: 16px;
+  margin: 10px;
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.next-button:hover {
+  opacity: 0.8;
+}
+
+.next-button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
 }
 
 .unfold-tree-nodes-button {
@@ -79,12 +252,27 @@
   cursor: pointer;
 }
 
-.submit-input-button {
-  margin: 10px;
+.unfold-tree-nodes-button:hover {
+  opacity: 0.8;
 }
 
-.nav-button:disabled {
-  margin: 10px;
+.submit-input-button {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  padding: 12px 50px;
+  background-color: #4caf50;
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.submit-input-button:hover {
+  opacity: 0.8;
+}
+
+.submit-input-button:disabled {
   background-color: #cccccc;
   color: #666666;
   cursor: not-allowed;
@@ -126,10 +314,22 @@
   margin: 10px;
 }
 
-.change-root-state-button {
-  margin: 10px;
+.rjv-component {
+  margin: 50px;
 }
 
-.reset-button {
-  margin: 10px;
+.change-root-state-button {
+  margin-right: 3px;
+  margin-bottom: 10px;
+  padding: 5px 18px;
+  background-color: #88dae2;
+  color: #000000;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.change-root-state-button:hover {
+  opacity: 0.8;
 }
