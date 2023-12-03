@@ -1,6 +1,11 @@
 {
   "name": "newuiapp",
   "version": "0.1.0",
+  "description": "Michelson interpreter visualized with step-by-step output",
+  "author": {
+    "name": "Jan Lazzari",
+    "email": "jan.lazzari@posteo.de"
+  },
   "private": true,
   "homepage": "localhost:",
   "dependencies": {
