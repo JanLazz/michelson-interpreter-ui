@@ -1,7 +1,7 @@
 import React, { useState, useRef } from "react";
 import * as michelsonImport from "michelson-interpreter";
 import Rjv from "react-json-tree-viewer";
-import "./MyMichelsonComponent.css";
+import "./ui.css";
 
 const michelsonInterpreter = michelsonImport.default.michelsonInterpreter;
 const State = michelsonImport.default.State;
@@ -181,30 +181,31 @@ function MyMichelsonComponent() {
     <div className="parent-div">
       <h2>Michelson Interpreter</h2>
       <div className="my-michelson-component">
-        <div className="file-upload-container">
-          <label htmlFor="file-upload" className="file-upload-label">
-            Choose a file
-          </label>
-          <input
-            id="file-upload"
-            className="file-upload-input"
-            type="file"
-            onChange={prepareFileChosen}
-          />
+        {!fileIsIn && (
+          <div className="file-upload-container">
+            <label htmlFor="file-upload" className="file-upload-label">
+              Choose a file
+            </label>
 
-          {fileIsIn && (
-            <button
-              type="button"
-              className="reset-button"
-              onClick={handleReload}
-              reset-button
-            >
-              Reset
-            </button>
-          )}
-          {fileIsIn && <p className="file-name">Selected file: {fileIsIn}</p>}
-        </div>
-
+            <input
+              id="file-upload"
+              className="file-upload-input"
+              type="file"
+              onChange={prepareFileChosen}
+            />
+          </div>
+        )}
+        {fileIsIn && (
+          <button
+            type="button"
+            className="reset-button"
+            onClick={handleReload}
+            reset-button
+          >
+            Reset
+          </button>
+        )}
+        {fileIsIn && <p className="file-name">Selected file: {fileIsIn}</p>}
         {fileIsIn && (
           <form ref={formRef}>
             <div className="input-info">
